@@ -1,0 +1,59 @@
+{% extends 'mango_shop/basic.html' %}
+
+{% block title %} About Us - Devgad Alphonso {% endblock %}
+
+{% block css %}
+<style>
+    .content-section {
+        padding: 20px 10px;
+    }
+    .why-choose-us {
+        background: #f8f9fa;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
+    }
+    .why-choose-us ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .why-choose-us ul li {
+        padding: 10px;
+        font-size: 1.1rem;
+    }
+    .contact-link {
+        color: #d35400;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    .contact-link:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-3 content-section">
+    <h4>Our Roots</h4>
+    <p>With a legacy spanning over two decades, our passion for mangoes runs deep. Generations of dedication ensure you receive only the finest quality mangoes, grown with care.</p>
+
+    <h4>Our Journey</h4>
+    <p>From our humble beginnings to a digital revolution, we are bringing our family's mango business online to serve a wider audience with the same trust and quality.</p>
+
+    <h4>Our Commitment</h4>
+    <p>At Mango Infinity, we value integrity, quality, and customer satisfaction. Each mango is a testament to our pursuit of excellence.</p>
+
+    <div class="why-choose-us">
+        <h4>Why Choose Devgad Alphonso?</h4>
+        <ul class="list-group">
+            <li class="list-group-item"><strong>🌟 Premium Quality:</strong> Handpicked with care for unmatched taste.</li>
+            <li class="list-group-item"><strong>🌿 Direct Sourcing:</strong> Fresh from the farms at competitive prices.</li>
+            <li class="list-group-item"><strong>🏡 Family Tradition:</strong> Generations of expertise, now at your fingertips.</li>
+        </ul>
+    </div>
+
+    <p class="mt-3">Experience the taste of nature's finest creation with MangoMart. Browse our selection and place your order today!</p>
+    <p>Need help? <a href="/mango_shop/contact" class="contact-link">Contact us</a> anytime.</p>
+</div>
+
+{% endblock %}

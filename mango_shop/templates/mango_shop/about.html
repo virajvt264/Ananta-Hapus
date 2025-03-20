@@ -1,0 +1,79 @@
+{% extends 'mango_shop/basic.html' %}
+
+{% block title %} About Us - Devgad Alphonso {% endblock %}
+
+{% block css %}
+<style>
+    .content-section {
+        padding: 40px 20px;
+        background-color: #fffaf0;
+    }
+    .why-choose-us {
+        background: #fff3e0;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    .why-choose-us ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .why-choose-us ul li {
+        padding: 12px;
+        font-size: 1.2rem;
+    }
+    .contact-link {
+        color: #d35400;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    .contact-link:hover {
+        text-decoration: underline;
+    }
+    .highlight-text {
+        color: #e67e22;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+  {% load static %}
+<div class="container my-5">
+  <div class="row align-items-center">
+    <div class="col-md-6">
+        <img src="{% static '/mango_shop/image.png' %}" alt="Devgad Alphonso Mangoes" class="img-fluid rounded">
+    </div>
+    <div class="col-md-6">
+      <h2 class="mb-4">Taste the Legacy of <span class="highlight-text">Devgad Alphonso</span></h2>
+      <p>At Devgad Hapus, our mission is to deliver the finest, naturally ripened Alphonso mangoes from our farms to your home. We are passionate about sustainable farming, preserving traditional cultivation methods, and ensuring that every bite bursts with the authentic taste of Devgad.</p>
+      <p>By supporting local farmers and prioritizing ethical practices, we bring you a healthier, chemical-free mango experience that captures the essence of nature's sweetness.</p>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5 content-section">
+    <h3>🍋 Our Roots</h3>
+    <p>For generations, our family has cultivated Devgad Alphonso mangoes with dedication and care. Our heritage of sustainable farming ensures that every mango we deliver is of the highest quality.</p>
+
+    <h3>🚀 Our Journey</h3>
+    <p>From our humble beginning as a family-run farm to expanding our reach through digital platforms, we are committed to sharing the authentic taste of Devgad Alphonso mangoes with families around the world.</p>
+
+    <h3>🌿 Our Commitment</h3>
+    <p>At <span class="highlight-text">Devgad Hapus</span>, we uphold values of integrity, quality, and customer satisfaction. Every mango you receive is a reflection of our dedication to excellence.</p>
+
+    <div class="why-choose-us mt-5">
+        <h3>Why Choose <span class="highlight-text">Devgad Alphonso</span>?</h3>
+        <ul class="list-group">
+            <li class="list-group-item"><strong>🌟 Premium Quality:</strong> Each mango is handpicked to ensure unparalleled taste and freshness.</li>
+            <li class="list-group-item"><strong>🌿 Farm Fresh:</strong> Delivered directly from our farms with no middlemen.</li>
+            <li class="list-group-item"><strong>🌍 Sustainable Practices:</strong> Supporting local farmers and eco-friendly methods.</li>
+            <li class="list-group-item"><strong>📦 Convenient Delivery:</strong> Enjoy the authentic taste of Devgad Alphonso, delivered to your doorstep.</li>
+        </ul>
+    </div>
+
+    <p class="mt-4">Experience the authentic flavor of Devgad Alphonso Mangoes. Order today and savor the taste of tradition!</p>
+    <p>Need assistance? <a href="/mango_shop/contact" class="contact-link">Contact us</a> anytime. We're here to help!</p>
+</div>
+
+{% endblock %}

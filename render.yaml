@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: ananta-devgad-hapus
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn Ananta_Devgad_Hapus.wsgi:application
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: DJANGO_SECRET_KEY
+        value: "your-secret-key"
+    staticPublishPath: staticfiles

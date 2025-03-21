@@ -120,3 +120,5 @@ LOGIN_REDIRECT_URL = 'Mango_shop-home'
 LOGOUT_REDIRECT_URL = 'Mango_shop-home'
 LOGIN_URL = 'login'
 
+ROOT_URLCONF = 'Ananta_Devgad_Hapus.urls'
+WSGI_APPLICATION = 'Ananta_Devgad_Hapus.wsgi.application'

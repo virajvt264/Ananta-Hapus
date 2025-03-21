@@ -139,10 +139,3 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'Mango_shop-home'
 LOGOUT_REDIRECT_URL = 'Mango_shop-home'
 LOGIN_URL = 'login'
-#
-# AUTHENTICATION_BACKENDS = [
-#     'users.auth_backend.EmailBackend',
-#     'django.contrib.auth.backends.ModelBackend',
-# ]
-#
-# IMAGEKIT_CACHEFILE_DIR="cache"

@@ -37,5 +37,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('mango_shop/', include("mango_shop.urls")),
     path('blog/', include("blog.urls")),
-    path('', include("users.urls")),  # Assuming this handles user-related URLs like login, signup, etc.
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('', include("mango_shop.urls")),
+    path('', include("users.urls")),
+]
+
+# Serve media files in development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -85,18 +85,15 @@
 
 {% block body %}
 {% load static %}
-<h5 class="my-3" style="color:red; margin-left: 10%;">We deliver our products only within the Mumbai region.</h5>
-<h5 class="my-3" style="color:red; margin-left: 10%;">Sorry for the inconvenience, but only people from the Mumbai region can place orders.</h5>
-
 <div class="container mt-3">
     {% for i in allProds %}
         <div class="grid-item  col-xs-3 col-sm-3 col-md-3">
           <div class="card " style="width: 18rem;">
-            <img src='/media/{{i.image}}' class="card-img-top" alt="...">
+            <img src='{{i.image_url}}' class="card-img-top" alt="...">
             <div class="card-body">
                <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h5>
                <h6 class="card-title" >Price : <span id="pricepr{{i.id}}">{{i.price}}</span></h6>
-               <p class="card-text">{{i.desc}}</p>
+               <p class="card-text">{{i.small_desc}}</p>
               <span id="divpr{{i.id}}" class="divpr">
                   <button id="pr{{i.id}}" class="btn btn-primary cart">Add To Cart</button>
               </span>

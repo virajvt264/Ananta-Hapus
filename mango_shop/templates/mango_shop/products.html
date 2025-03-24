@@ -81,11 +81,13 @@
           display: block;
          }
 
-
 {% endblock %}
 
 {% block body %}
 {% load static %}
+<h5 class="my-3" style="color:red; margin-left: 10%;">We deliver our products only within the Mumbai region.</h5>
+<h5 class="my-3" style="color:red; margin-left: 10%;">Sorry for the inconvenience, but only people from the Mumbai region can place orders.</h5>
+
 <div class="container mt-3">
     {% for i in allProds %}
         <div class="grid-item  col-xs-3 col-sm-3 col-md-3">

@@ -66,6 +66,7 @@
   </style>
   <body>
   {% load static %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <img src="https://i.postimg.cc/zvKg5fcH/logo.png" alt="logo" style="width: 95px; height: 55px;">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,8 +79,11 @@
         <a class="nav-link" href="/mango_shop">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/mango_shop/products">Products<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/mango_shop/products">Order Mangos<span class="sr-only">(current)</span></a>
       </li>
+<!--      <li class="nav-item active">-->
+<!--        <a class="nav-link" href="/mango_shop/meva">Devgad Meva<span class="sr-only">(current)</span></a>-->
+<!--      </li>-->
       <li class="nav-item active">
         <a class="nav-link" href="/mango_shop/tracking">Track Your Order<span class="sr-only">(current)</span></a>
       </li>
@@ -116,11 +120,24 @@
       </li>
     </ul>
     <form method="get" action="/search/" class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search" id="search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <div class="input-group" style="position: relative; width: 100%; max-width: 400px;">
+        <input class="form-control rounded-pill ps-4 pe-5"
+               type="search"
+               placeholder="Search for products..."
+               aria-label="Search"
+               name="search"
+               id="search"
+               style="height: 45px; background-color: #f9f9f9; border: 1px solid #ccc; font-size: 14px;">
+        <button type="submit"
+                class="btn p-0"
+                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); border: none; background: none;">
+          <i class="fa fa-search" style="color: #ff7f00; font-size: 18px;"></i>
+        </button>
+      </div>
     </form>
+
     <button type="button" class="btn btn-secondary mx-2" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Vivamussagittis lacus vel augue laoreet rutrum faucibus..">
-  Cart(<span id="cart">0</span>)
+  <i class="fa fa-shopping-cart"></i> Cart(<span id="cart">0</span>)
 </button>
   </div>
 </nav>
@@ -139,7 +156,7 @@
         <ul>
             <li><b>Kokan Meva</b>
                 <ul>
-                    <li><a href="#">Devgad Alphanso</a></li>
+                    <li><a href="/mango_shop/products">Devgad Alphanso</a></li>
                 </ul>
                 <ul>
                     <li><a href="#">Mango Pulp</a></li>
@@ -155,16 +172,16 @@
         <ul>
             <li><b>Quick Links</b>
                 <ul>
-                    <li><a href="/home/">Home</a></li>
+                    <li><a href="/mango_shop">Home</a></li>
                 </ul>
                 <ul>
-                    <li><a href="/manage_order/">Manage Order</a></li>
+                    <li><a href="/mango_shop/products">Order Mangos</a></li>
                 </ul>
                 <ul>
-                    <li><a href="/contact_us/">Contact Us</a></li>
+                    <li><a href="/mango_shop/contact">Contact Us</a></li>
                 </ul>
                 <ul>
-                    <li><a href="/about_us/">About Us</a></li>
+                    <li><a href="/mango_shop/about">About Us</a></li>
                 </ul>
             </li>
         </ul>
@@ -192,6 +209,9 @@
         <a href="mailto:your-email@example.com?subject=Inquiry%20about%20Mango%20Products&body=Hello%20Viraj,%20I%20would%20like%20to%20inquire%20about%20your%20mango%20products">
             <img src="https://i.postimg.cc/rp6zMZyF/gmail.png" alt="Viraj Tukarul Mango Business Email" style="width: 50px; height: 50px;"/>
         </a>
+
+        <img src="https://i.postimg.cc/76W65JRQ/logo2.png" alt="logo" style="width: 90px; height: 90px;">
+
     </footer>
 
     <!-- Optional JavaScript -->

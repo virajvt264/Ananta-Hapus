@@ -124,3 +124,14 @@ def products(request):
     return render(request, 'mango_shop/products.html', context)
 
 
+
+# def meva(request):
+#     allProds = []
+#     products = Product.objects.filter(category="Kokan Meva")
+#     prod = {items for items in products}
+#     for product in prod:
+#         allProds.append(product)
+#
+#     context = {'allProds': allProds}
+#     return render(request, 'mango_shop/meva.html', context)
+

@@ -12,4 +12,5 @@ urlpatterns = [
     path('gallary/', views.gallary, name='Mango_shop - Gallary'),
     path('search/', views.search, name='Mango_shop - search'),
     path('products/', views.products, name='Mango_shop - products'),
+    # path('meva/', views.meva, name='Mango_shop - Meva'),
 ]

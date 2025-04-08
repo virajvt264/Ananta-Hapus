@@ -11,19 +11,19 @@
         <form action="/mango_shop/contact/" method="post">{% csrf_token %}
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Enter Your Name">
+            <input type="text" class="form-control" name="name" id="name" placeholder="Enter Your Name" required>
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" name="email" id="email" placeholder="Enter Your Email">
+            <input type="email" class="form-control" name="email" id="email" placeholder="Enter Your Email" required>
           </div>
           <div class="form-group">
             <label for="phone">Contact Number</label>
-            <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter Your Phone Number">
+            <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter Your Phone Number" required>
           </div>
           <div class="form-group">
             <label for="desc">Enter Your Query</label>
-            <textarea class="form-control" name="desc" id="desc" rows="3" style="height:130px"></textarea>
+            <textarea class="form-control" name="desc" id="desc" rows="3" style="height:130px" required></textarea>
           </div>
           <button type="submit" class="btn btn-success">Submit</button>
         </form>

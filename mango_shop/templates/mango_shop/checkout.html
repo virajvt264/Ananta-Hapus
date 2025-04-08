@@ -17,7 +17,7 @@
     </div>
 
     <div class="col my-4">
-        <h2>Step 2 - Enter Address & Other Details:</h2>
+        <h2>Step 2 - Enter Shipping Address:</h2>
         <form method="post" action="/mango_shop/checkout/">{% csrf_token %}
             <input type="hidden" name="itemsJson" id="itemsJson">
             <input type="hidden" name="amount" id="amount">
@@ -77,16 +77,23 @@ if ($.isEmptyObject(cart)) {
     mystr = `<p>Your cart is empty, please add some items to your cart before checking out!</p>`
     $('#items').append(mystr);
 } else {
-    for (item in cart) {
+    // Add header row
+    let headerRow = `<li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
+                        <span>Product Name</span>
+                        <span>Quantity</span>
+                    </li>`;
+    $('#items').append(headerRow);
+
+    for (let item in cart) {
         let name = cart[item][1];
         let qty = cart[item][0];
         let itemPrice = cart[item][2];
         sum = sum + qty;
-        totalPrice = totalPrice + qty * itemPrice
-        mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
-                    ${name}
-                    <span class="badge badge-primary badge-pill">${qty}</span>
-                </li>`
+        totalPrice = totalPrice + qty * itemPrice;
+        let mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                        ${name}
+                        <span class="badge badge-primary badge-pill">${qty}</span>
+                    </li>`;
         $('#items').append(mystr);
     }
 }

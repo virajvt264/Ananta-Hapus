@@ -1,6 +1,6 @@
 {% extends 'mango_shop/basic.html' %}
 
-{% block title %} About Us - Devgad Alphonso {% endblock %}
+{% block title %} About Us {% endblock %}
 
 {% block css %}
 <style>
@@ -66,8 +66,28 @@
 <div class="container my-5 parallax-section">
   <div class="row align-items-center fade-in">
     <div class="col-md-6">
-        <img src="https://i.postimg.cc/NFL6wbkL/image.png" alt="Devgad Alphonso Mangoes" class="img-fluid rounded parallax-image">
+      <!-- Bootstrap Carousel -->
+      <div id="mangoCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://postimage.me/images/2025/04/14/Screenshot-2025-04-14-142617.png" class="d-block w-100 rounded parallax-image carousel-click" alt="Devgad Alphonso Mangoes">
+          </div>
+          <div class="carousel-item">
+            <img src="https://postimage.me/images/2025/04/14/ChatGPT-Image-Apr-14-2025-03_23_25-PM.png" class="d-block w-100 rounded parallax-image carousel-click" alt="Second Mango Image">
+          </div>
+        </div>
+        <!-- Hidden Carousel controls -->
+        <button class="carousel-control-prev d-none" type="button" data-bs-target="#mangoCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next d-none" type="button" data-bs-target="#mangoCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     </div>
+
     <div class="col-md-6">
       <h2 class="mb-4">Taste the Legacy of <span class="highlight-text">Devgad Alphonso</span></h2>
       <p>At Devgad Hapus, our mission is to deliver the finest, naturally ripened Alphonso mangoes from our farms to your home. We are passionate about sustainable farming, preserving traditional cultivation methods, and ensuring that every bite bursts with the authentic taste of Devgad.</p>
@@ -97,7 +117,7 @@
     </div>
 
     <p class="mt-4 fade-in">Experience the authentic flavor of Devgad Alphonso Mangoes. Order today and savor the taste of tradition!</p>
-    <p class="fade-in">Need assistance? <a href="/mango_shop/contact" class="contact-link smooth-scroll">Contact us</a> anytime. We're here to help!</p>
+    <p class="fade-in">Need assistance? <a href="/contact" class="contact-link smooth-scroll">Contact us</a> anytime. We're here to help!</p>
 </div>
 {% endblock %}
 
@@ -114,26 +134,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 entry.target.classList.remove('visible');
             }
         });
-    }, {
-        threshold: 0.1
-    });
+    }, { threshold: 0.1 });
     fadeElements.forEach(element => observer.observe(element));
 
-    // Parallax Effect
-    const parallaxImage = document.querySelector('.parallax-image');
+    // Parallax Effect on all parallax images
+    const parallaxImages = document.querySelectorAll('.parallax-image');
     window.addEventListener('scroll', () => {
         const scrollPosition = window.scrollY;
-        parallaxImage.style.transform = `translateY(${scrollPosition * 0.3}px)`;
+        parallaxImages.forEach(img => {
+            img.style.transform = `translateY(${scrollPosition * 0.3}px)`;
+        });
     });
 
-    // Smooth Scroll for Links
-    document.querySelectorAll('.smooth-scroll').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            document.querySelector(targetId).scrollIntoView({
-                behavior: 'smooth'
-            });
+    // Image click triggers carousel next slide
+    const carouselEl = document.querySelector('#mangoCarousel');
+    const carousel = new bootstrap.Carousel(carouselEl, {
+        interval: false,
+        ride: false,
+        pause: true
+    });
+
+    document.querySelectorAll('.carousel-click').forEach(img => {
+        img.addEventListener('click', () => {
+            carousel.next();
         });
     });
 });

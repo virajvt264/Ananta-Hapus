@@ -7,9 +7,9 @@ class Product(models.Model):
     product_id =models.AutoField
     product_name = models.CharField(max_length=50)
     category = models.CharField(max_length=50, default="")
-    small_desc = models.CharField(max_length=50, default="")
+    small_desc = models.CharField(max_length=200, default="")
     price = models.IntegerField(default=0)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=500)
     pub_date = models.DateField()
     image_url = models.URLField(max_length=500, blank=True, null=True)
     product_weight = [

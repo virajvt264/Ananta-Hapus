@@ -123,3 +123,15 @@ LOGIN_URL = 'login'
 
 ROOT_URLCONF = 'Ananta_Devgad_Hapus.urls'
 WSGI_APPLICATION = 'Ananta_Devgad_Hapus.wsgi.application'
+
+# settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'virajvvt@gmail.com'
+EMAIL_HOST_PASSWORD = 'wflk rjbe bmqq qfcr'  # Use an app-specific password, not your Gmail login password
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+#Shreekrishna google app

@@ -1,5 +1,5 @@
 {% extends 'mango_shop/basic.html' %}
-{% block title %}Cart Tracker{% endblock %}
+{% block title %}Track Your Order{% endblock %}
 {% block body %}
 <div class="container">
     <div class="col my-4">
@@ -45,7 +45,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'POST',
-            url: '/mango_shop/tracking/',
+            url: '/tracking/',
             data: formData,
             dataType: 'json',
             encode: true,

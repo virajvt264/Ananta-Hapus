@@ -34,6 +34,7 @@ mysql==0.0.3
 mysql-connector-python==9.2.0
 mysqlclient==2.2.7
 numpy==1.26.4
+oauthlib==3.2.2
 opencv-contrib-python==4.11.0.86
 opencv-python==4.11.0.86
 opt_einsum==3.4.0

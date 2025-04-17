@@ -56,7 +56,7 @@
 
 <div class="container mt-5">
     <h2 class="section-title">Your Addresses</h2>
-    <a href="{% url 'customer_form' %}" class="btn btn-primary mb-3">Add New Address</a>
+    <a href="{% url 'customer_form' %}" class="btn btn-primary mb-3">Add Your Address</a>
 
     {% if customers %}
         <div class="list-group">
@@ -85,23 +85,34 @@
                             Order ID: {{ order.order_id }}
                         </div>
                         <div class="card-body">
-                            <p><strong>Total Amount:</strong> ₹{{ order.amount }}</p>
-                            <p><strong>Items:</strong></p>
-                            <ol class="ps-3">
-                                {% for item in order.items_list %}
-                                    <li class="mb-2">
-                                        <strong>{{ item.name|capfirst }}</strong>
-                                        {% if item.code %}
-                                        {% endif %}
-                                        <br>
-                                        Quantity: {{ item.quantity }}
-                                        <br>
-                                        Price: ₹{{ item.price }}
-                                    </li>
-                                {% endfor %}
-                            </ol>
+                            <p><strong>Products Details:</strong></p>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="table-warning">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Quantity</th>
+                                            <th>Price (₹)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in order.items_list %}
+                                        <tr>
+                                            <td>{{ item.name|capfirst }}</td>
+                                            <td>{{ item.quantity }}</td>
+                                            <td>₹{{ item.price }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        <tr class="table-info">
+                                            <td colspan="2" class="text-end"><strong>Total Amount:</strong></td>
+                                            <td><strong>₹{{ order.amount }}</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             <p><strong>Shipping Address:</strong> {{ order.address }}, {{ order.city }}, {{ order.state }} - {{ order.zip_code }}</p>
                             <p><strong>Phone:</strong> {{ order.phone }}</p>
+                            <p><strong>Email:</strong> {{ order.email }}</p>
                         </div>
                     </div>
                 </div>

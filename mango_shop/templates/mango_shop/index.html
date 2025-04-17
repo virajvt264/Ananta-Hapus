@@ -1,104 +1,167 @@
 {% extends 'mango_shop/basic.html' %}
+{% block title %} Home {% endblock %}
+
 {% block css %}
-.col-md-3
-{
-display: inline-block;
-margin-left:-4px;
-}
-.carousel-indicators .active {
-background-color: blue;
-}
-.col-md-3 img{
-width: 170px;
-height: 200px;
-}
-body .carousel-indicator li{
-background-color: blue;
-}
-body .carousel-indicators{
-bottom: 0;
-}
-body .carousel-control-prev-icon,
-body .carousel-control-next-icon{
-background-color: blue;
-}
-.carousel-control-prev,
-.carousel-control-next{
-top: auto;
-bottom: auto;
-padding-top: 222px;
-}
-body .no-padding{
-padding-left: 0,
-padding-right: 0;
-}
+<style>
+  body {
+    background-color: #f4f6f8;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  h5.product-warning {
+    color: #ff4d4f;
+    text-align: center;
+    margin-top: 15px;
+    font-weight: 600;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px 15px;
+  }
+
+  .products-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+  }
+
+  .grid-item {
+    flex: 1 1 260px;
+    max-width: 260px;
+  }
+
+  .card {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  .card-body {
+    padding: 16px;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-bottom: 12px;
+    min-height: 48px;
+  }
+
+  .card-body h6 {
+    font-size: 1rem;
+    color: #16a34a;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+  }
+
+  .btn-primary {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    margin-right: 6px;
+  }
+
+  .btn-primary:hover {
+    background-color: #218838;
+  }
+
+  .btn-danger {
+    background-color: #e3342f;
+    color: white;
+  }
+
+  @media screen and (max-width: 768px) {
+    .grid-item {
+      max-width: 48%;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .grid-item {
+      max-width: 100%;
+    }
+
+    .card-body h6, .card-title {
+      text-align: center;
+    }
+
+    .card-text {
+      text-align: justify;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      margin-bottom: 8px;
+    }
+  }
+</style>
 {% endblock %}
+
 {% block body %}
 {% load static %}
-<h5 class="my-3" style="color:red; margin-left: 10%;">We deliver our products only within the Mumbai Western region.</h5>
-<h5 class="my-3" style="color:red; margin-left: 10%;">Sorry for the inconvenience, but only people from the Mumbai region can place orders.</h5>
-
-<img src="https://postimage.me/images/2025/04/14/ChatGPT-Image-Apr-14-2025-03_23_25-PM.png" alt="My image" width=100% height="700">
+<h5 class="my-3 product-warning">We deliver our products only within the Mumbai Western region.</h5>
+<h5 class="my-3 product-warning">Sorry for the inconvenience, but only people from the Mumbai region can place orders.</h5>
 
 <div class="container">
-    <!-- Slideshow starts here -->
+  <div class="row my-4 products-row">
     {% for product, range, nSlides in allProds %}
-    <div class="row">
-
-        <!-- Add heading conditionally based on loop index -->
-        {% if forloop.first %}
-            <h2 class="w-100 text-center">Devgad Meva</h2>
-        {% elif forloop.counter == 2 %}
-            <h2 class="w-100 text-center">Devgad Alphonso</h2>
-        {% endif %}
-
-        <div id="demo{{forloop.counter}}" class="col carousel slide my-3" data-ride="carousel">
-            <ul class="carousel-indicators">
-                <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
-                {% for i in range %}
-                <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}"></li>
-                {% endfor %}
-            </ul>
-
-            <div class="container carousel-inner no-padding">
-                <div class="carousel-item active">
-                    {% for i in product %}
-                    <div class="col-xs-3 col-sm-3 col-md-3">
-                        <div class="card align-items-center" style="width: 18rem;">
-                            <img src='{{i.image_url}}' class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h5>
-                                <h6 class="card-title">Price : <span id="pricepr{{i.id}}">{{i.price}}</span></h6>
-                                <p class="card-text">{{i.small_desc}}</p>
-                                <span id="divpr{{i.id}}" class="divpr">
-                                    <button id="pr{{i.id}}" class="btn btn-primary cart">Add To Cart</button>
-                                </span>
-                                <a href="/product/{{i.id}}"><button id="qv{{i.id}}" class="btn btn-primary cart">QuickView</button></a>
-                            </div>
-                        </div>
-                    </div>
-                    {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
-                </div>
-                <div class="carousel-item">
-                    {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
+      {% for i in product %}
+      <div class="grid-item">
+        <div class="card">
+          <img src="{{ i.image_url }}" alt="{{ i.product_name }}">
+          <div class="card-body">
+            <h5 class="card-title" id="namepr{{ i.id }}">{{ i.product_name }}</h5>
+            <h6>Price: <span id="pricepr{{ i.id }}">{{ i.price }}</span></h6>
+            <p class="card-text">{{ i.small_desc }}</p>
+            <span id="divpr{{ i.id }}" class="divpr">
+              <button id="pr{{ i.id }}" class="btn btn-primary cart">Add To Cart</button>
+            </span>
+            <a href="/product/{{ i.id }}">
+              <button id="qv{{ i.id }}" class="btn btn-primary cart">QuickView</button>
+            </a>
+          </div>
         </div>
-        <!-- left and right controls for the slide -->
-        <a class="carousel-control-prev" href="#demo{{forloop.counter}}" data-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </a>
-        <a class="carousel-control-next" href="#demo{{forloop.counter}}" data-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </a>
-    </div>
+      </div>
+      {% endfor %}
     {% endfor %}
+  </div>
 </div>
-
-
-<!--<img src="{% static '/mango_shop/image.jpg' %}" alt="My image" width=100% height="600">-->
 {% endblock %}
+
 {% block js %}
 <script>
 // Find out the cart items from localStorage
@@ -131,14 +194,14 @@ updatePopover(cart);
 function updatePopover(cart) {
 <!--    console.log('We are inside updatePopover');-->
     var popStr = "";
-    popStr = popStr + "<h5> Cart for your items in my shopping cart </h5><div class='mx-2 my-2'>";
+    popStr = popStr + "<h5> Your Cart </h5><div class='mx-2 my-2'>";
     var i = 1;
     for (var item in cart) {
         popStr = popStr + "<b>" + i + "</b>. ";
         popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>';
         i = i + 1;
     }
-    popStr = popStr + "</div> <a href='/checkout'><button class='btn btn-primary' id ='checkout'>Checkout</button></a> <button class='btn btn-primary' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+    popStr = popStr + "</div> <a href='/checkout'><button class='btn btn-primary' id ='checkout'>Checkout</button></a> <button class='btn btn-danger' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
 <!--    console.log(popStr);-->
     document.getElementById('popcart').setAttribute('data-content', popStr);
     $('#popcart').popover('show');

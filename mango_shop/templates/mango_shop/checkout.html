@@ -38,6 +38,16 @@
     .btn-primary:hover {
         background-color: #019875;
     }
+        .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        border: 0;
+    }
 </style>
 
 <div class="container checkout-container">
@@ -65,7 +75,7 @@
                 </tfoot>
             </table>
         </div>
-        <nav aria-label="breadcrumb">
+        <nav aria-label="breadcrumb" class="visually-hidden">
             <ol class="breadcrumb mt-3">
                 <li class="breadcrumb-item active" aria-current="page">
                     Your Cart Total Is <b>Rs.<span id="totalPrice"></span></b>. You will pay this amount after receiving your order.
@@ -202,7 +212,7 @@ $('#itemsJson').val(JSON.stringify(cart));
 $('#amount').val($('#totalPrice').html());
 
 {% if thank %}
-alert("Thanks for ordering with us. Your order id is {{id}}. Use it to track your order using our order tracker.");
+alert("Thank you for your order. Go to your profile to check the details and track your order using our order tracker.");
 localStorage.clear();
 document.location = "";
 {% endif %}

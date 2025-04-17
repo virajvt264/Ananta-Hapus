@@ -1,7 +1,115 @@
 {% extends 'mango_shop/basic.html' %}
 {% load crispy_forms_tags %}
-{% block title %} Register {% endblock %}
+
+{% block title %}Profile{% endblock %}
 
 {% block body %}
-   <h3>{{user.username}}</h3>
+
+<style>
+    .card-custom {
+        border-radius: 12px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        border: none;
+    }
+
+    .card-header-gradient {
+        background: linear-gradient(135deg, #f9b233, #f37335);
+        color: white;
+        padding: 12px 20px;
+        font-weight: 600;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+
+    .section-title {
+        border-left: 6px solid #f37335;
+        padding-left: 12px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #444;
+    }
+
+    .list-group-item {
+        background-color: #fffbe6;
+        border: 1px solid #ffe58f;
+        border-radius: 6px;
+    }
+
+    .btn-primary {
+        background-color: #f37335;
+        border-color: #f37335;
+    }
+
+    .btn-primary:hover {
+        background-color: #d55c1f;
+        border-color: #d55c1f;
+    }
+
+    .address-box h5 {
+        color: #333;
+    }
+
+    ol {
+        padding-left: 1.2rem;
+    }
+</style>
+
+<div class="container mt-5">
+    <h2 class="section-title">Your Addresses</h2>
+    <a href="{% url 'customer_form' %}" class="btn btn-primary mb-3">Add New Address</a>
+
+    {% if customers %}
+        <div class="list-group">
+            {% for customer in customers %}
+                <div class="list-group-item mb-2 address-box">
+                    <h5 class="mb-1">{{ customer.name }}</h5>
+                    <p class="mb-1"><strong>Email:</strong> {{ customer.email }}</p>
+                    <p class="mb-1"><strong>Phone:</strong> {{ customer.phone }}</p>
+                    <p class="mb-1"><strong>Address:</strong> {{ customer.address }}, {{ customer.city }}, {{ customer.state }} - {{ customer.zip_code }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No addresses available.</p>
+    {% endif %}
+</div>
+
+<div class="container mt-5">
+    <h2 class="section-title">Your Orders</h2>
+    {% if orders %}
+        <div class="col">
+            {% for order in orders %}
+                <div class="col-md-6 mb-4">
+                    <div class="card card-custom">
+                        <div class="card-header-gradient">
+                            Order ID: {{ order.order_id }}
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Total Amount:</strong> ₹{{ order.amount }}</p>
+                            <p><strong>Items:</strong></p>
+                            <ol class="ps-3">
+                                {% for item in order.items_list %}
+                                    <li class="mb-2">
+                                        <strong>{{ item.name|capfirst }}</strong>
+                                        {% if item.code %}
+                                        {% endif %}
+                                        <br>
+                                        Quantity: {{ item.quantity }}
+                                        <br>
+                                        Price: ₹{{ item.price }}
+                                    </li>
+                                {% endfor %}
+                            </ol>
+                            <p><strong>Shipping Address:</strong> {{ order.address }}, {{ order.city }}, {{ order.state }} - {{ order.zip_code }}</p>
+                            <p><strong>Phone:</strong> {{ order.phone }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No orders yet.</p>
+    {% endif %}
+</div>
+
 {% endblock %}

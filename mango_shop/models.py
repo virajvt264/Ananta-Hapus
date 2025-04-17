@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Model, EmailField
 from django.conf import settings
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Product(models.Model):
@@ -33,6 +34,7 @@ class Contact(models.Model):
         return self.name
 
 class Orders(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True) # new
     order_id = models.AutoField(primary_key=True)
     items_json = models.CharField(max_length=5000)
     amount = models.IntegerField(default=0)
@@ -43,6 +45,7 @@ class Orders(models.Model):
     state = models.CharField(max_length=100)
     zip_code = models.TextField(max_length=10)
     phone = models.TextField(max_length=30, default="")
+
 
 class OrderUpdate(models.Model):
     update_id = models.AutoField(primary_key=True)

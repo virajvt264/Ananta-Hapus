@@ -1,0 +1,56 @@
+{% extends 'mango_shop/basic.html' %}
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+
+    <!-- Customer Details -->
+    <h3>Your Profile</h3>
+    {% if customers %}
+        <div class="list-group">
+            {% for customer in customers %}
+                <div class="list-group-item mb-2">
+                    <h5 class="mb-1">{{ customer.name }}</h5>
+                    <p class="mb-1"><strong>Email:</strong> {{ customer.email }}</p>
+                    <p class="mb-1"><strong>Phone:</strong> {{ customer.phone }}</p>
+                    <p class="mb-1"><strong>Address:</strong> {{ customer.address }}, {{ customer.city }}, {{ customer.state }} - {{ customer.zip_code }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No customer details available.</p>
+    {% endif %}
+
+</div>
+
+<div class="container mt-4">
+
+    <!-- Order Details -->
+    <h3>Your Orders</h3>
+    {% if orders %}
+        <div class="row">
+            {% for order in orders %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Order ID: {{ order.order_id }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Amount:</strong> ₹{{ order.amount }}</p>
+                            <p><strong>Items:</strong></p>
+                            <pre>{{ order.items_json }}</pre>
+                            <p><strong>Shipping Address:</strong> {{ order.address }}, {{ order.city }}, {{ order.state }} - {{ order.zip_code }}</p>
+                            <p><strong>Phone:</strong> {{ order.phone }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No orders yet.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}
+

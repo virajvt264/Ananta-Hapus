@@ -6,6 +6,8 @@ from math import ceil
 import json
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from users.models import CustomerDetails
+
 
 
 def home(request):
@@ -75,6 +77,16 @@ def searchmatch(query, item):
     else:
         return False
 
+def products(request):
+    allProds = []
+    products = Product.objects.all()
+    prod = {items for items in products}
+    for product in prod:
+        allProds.append(product)
+
+    context = {'allProds': allProds}
+    return render(request, 'mango_shop/products.html', context)
+
 def search(request):
     query = request.GET.get('search')
     allProds = []
@@ -92,6 +104,33 @@ def search(request):
     context = {'allProds': allProds}
     return render(request, 'mango_shop/index.html', context)
 
+# @login_required
+# def checkout(request):
+#     if request.method == "POST":
+#         print(request)
+#         items_json = request.POST.get('itemsJson', '')
+#         name = request.POST.get('name', '')
+#         amount = request.POST.get('amount', '')
+#         email = request.POST.get('email', '')
+#         address = request.POST.get('address', '') + " " + request.POST.get('address2', '')
+#         city = request.POST.get('city', '')
+#         state = request.POST.get('state', '')
+#         zip_code = request.POST.get('zip_code', '')
+#         phone= request.POST.get('phone', '')
+#         Order = Orders(items_json=items_json, name=name, email=email, address=address,
+#                        city=city,state=state, zip_code=zip_code,  phone=phone, amount=amount)
+#         Order.save()
+#         update = OrderUpdate(order_id=Order.order_id, update_desc="The order has been placed")
+#         update.save()
+#         thank = True
+#         id =Order.order_id
+#         return  render(request, 'mango_shop/checkout.html', {'thank':thank, 'id':id})
+#     return  render(request, 'mango_shop/checkout.html')
+
+
+
+
+
 @login_required
 def checkout(request):
     if request.method == "POST":
@@ -104,24 +143,53 @@ def checkout(request):
         city = request.POST.get('city', '')
         state = request.POST.get('state', '')
         zip_code = request.POST.get('zip_code', '')
-        phone= request.POST.get('phone', '')
-        Order = Orders(items_json=items_json, name=name, email=email, address=address,
-                       city=city,state=state, zip_code=zip_code,  phone=phone, amount=amount)
-        Order.save()
-        update = OrderUpdate(order_id=Order.order_id, update_desc="The order has been placed")
+        phone = request.POST.get('phone', '')
+
+        # Save main order
+        order = Orders(
+            user=request.user,
+            items_json=items_json,
+            name=name,
+            email=email,
+            address=address,
+            city=city,
+            state=state,
+            zip_code=zip_code,
+            phone=phone,
+            amount=amount
+        )
+        order.save()
+
+        # Save order update log
+        update = OrderUpdate(order_id=order.order_id, update_desc="The order has been placed")
         update.save()
+
         thank = True
-        id =Order.order_id
-        return  render(request, 'mango_shop/checkout.html', {'thank':thank, 'id':id})
-    return  render(request, 'mango_shop/checkout.html')
+        id = order.order_id
+        customers = CustomerDetails.objects.all()
 
-def products(request):
-    allProds = []
-    products = Product.objects.all()
-    prod = {items for items in products}
-    for product in prod:
-        allProds.append(product)
+        context = {
+            'thank': thank,
+            'id': id,
+            'customers': customers
+        }
+        return render(request, 'mango_shop/checkout.html', context)
 
-    context = {'allProds': allProds}
-    return render(request, 'mango_shop/products.html', context)
+    # GET request
+    user = request.user
+    customers = CustomerDetails.objects.filter(user=user)
+    return render(request, 'mango_shop/checkout.html', {'customers': customers})
+
+
+
+
+from .models import Orders
+
+@login_required
+def profile(request):
+    user = request.user
+    customers = CustomerDetails.objects.filter(user=user)
+    orders = Orders.objects.filter(user=user)
+    return render(request, 'mango_shop/profile_user.html', {'customers': customers, 'orders': orders})
+
 

@@ -1,67 +1,157 @@
 {% extends 'mango_shop/basic.html' %}
-{% block title%} Checkout - My Awesome Cart{% endblock %}
-{% block body %}
+{% load crispy_forms_tags %}
+{% block title %}Checkout{% endblock %}
 
-<div class="container">
+{% block body %}
+<style>
+    .checkout-container {
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        padding: 30px;
+        margin-top: 30px;
+    }
+    h2 {
+        font-weight: 700;
+        color: #2d3436;
+        margin-bottom: 20px;
+    }
+    .list-group-item {
+        background-color: #f8f9fa;
+        border: none;
+    }
+    .breadcrumb {
+        background-color: #f1f2f6;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+    .form-control {
+        border-radius: 10px;
+    }
+    .btn-primary {
+        background-color: #00b894;
+        border: none;
+        padding: 12px 25px;
+        font-weight: 600;
+        border-radius: 10px;
+    }
+    .btn-primary:hover {
+        background-color: #019875;
+    }
+</style>
+
+<div class="container checkout-container">
     <div class="col my-4">
-        <h2>Step 1 - My Awesome Cart Express Checkout - Review Your Cart Items</h2>
-        <div class="my-4">
-            <ul class="list-group" id="items">
-            </ul>
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb mt-3">
-                    <li class="breadcrumb-item active" aria-current="page">Your Cart Total Is <b>Rs.<span id="totalPrice"></b>  </span>You will pay this amount after receiving your order. Enter your details below to place your order. Thank you for shopping!</li>
-              </ol>
-            </nav>
+        <h2>🛒 Step 1 - Review Your Cart Items</h2>
+        <div class="table-responsive mb-3">
+            <table class="table table-bordered" id="cartTable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price (₹)</th>
+                        <th scope="col">Subtotal (₹)</th>
+                    </tr>
+                </thead>
+                <tbody id="itemsTableBody">
+                    <!-- JS will inject rows here -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="4" class="text-end">Total Amount (₹)....(Cash On Delivery)</th>
+                        <th id="totalAmount" class="text-start">0</th>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mt-3">
+                <li class="breadcrumb-item active" aria-current="page">
+                    Your Cart Total Is <b>Rs.<span id="totalPrice"></span></b>. You will pay this amount after receiving your order.
+                    <br>Enter your details below to place your order. Thank you for shopping!
+                </li>
+            </ol>
+        </nav>
     </div>
 
+    {% if customers %}
     <div class="col my-4">
-        <h2>Step 2 - Enter Shipping Address:</h2>
+        <h2>🏠 Step 2 - Select a Saved Address:</h2>
+        <div class="list-group">
+            {% for customer in customers %}
+                <label class="list-group-item">
+                    <input type="radio" name="saved_address" class="form-check-input me-1 saved-address-radio"
+                           data-name="{{ customer.name }}"
+                           data-email="{{ customer.email }}"
+                           data-phone="{{ customer.phone }}"
+                           data-address="{{ customer.address }}"
+                           data-address2="{{ customer.address2 }}"
+                           data-city="{{ customer.city }}"
+                           data-state="{{ customer.state }}"
+                           data-zip="{{ customer.zip_code }}">
+                    <strong>{{ customer.name }}</strong> - {{ customer.phone }}<br>
+                    {{ customer.address }}, {{ customer.address2 }}<br>
+                    {{ customer.city }}, {{ customer.state }} - {{ customer.zip_code }}
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="col my-4">
+        <h2>📦 Step 3 - Enter Shipping Address:</h2>
         <form method="post" action="/checkout/">{% csrf_token %}
             <input type="hidden" name="itemsJson" id="itemsJson">
             <input type="hidden" name="amount" id="amount">
-            <div class="form-row">
-                <div class="form-group col-md-6">
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="col-md-6 mb-3">
                     <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                 </div>
             </div>
-            <div class="form-group">
+
+            <div class="mb-3">
                 <label for="address">Address</label>
                 <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St" required>
             </div>
-            <div class="form-group">
+
+            <div class="mb-3">
                 <label for="address2">Address line 2</label>
                 <input type="text" class="form-control" id="address2" name="address2" placeholder="Apartment, studio, or floor">
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
                     <label for="city">City</label>
                     <input type="text" class="form-control" id="city" name="city" required>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="col-md-4 mb-3">
                     <label for="state">State</label>
                     <input type="text" class="form-control" id="state" name="state" placeholder="Enter State" required>
                 </div>
-                <div class="form-group col-md-2">
+                <div class="col-md-2 mb-3">
                     <label for="zip_code">Zip</label>
                     <input type="text" class="form-control" id="zip_code" name="zip_code" required>
                 </div>
             </div>
-            <div class="form-group">
+
+            <div class="mb-4">
                 <label for="phone">Phone Number</label>
                 <input type="tel" class="form-control" id="phone" name="phone" required>
             </div>
-            <button type="submit" class="btn btn-primary">Place Order</button>
+
+            <button type="submit" class="btn btn-primary">✅ Place Order</button>
         </form>
     </div>
 </div>
 {% endblock %}
+
 {% block js %}
 <script>
 if (localStorage.getItem('cart') == null) {
@@ -70,41 +160,63 @@ if (localStorage.getItem('cart') == null) {
     cart = JSON.parse(localStorage.getItem('cart'));
 }
 console.log(cart);
+
 var sum = 0;
 var totalPrice = 0;
-if ($.isEmptyObject(cart)) {
-    //if object is empty
-    mystr = `<p>Your cart is empty, please add some items to your cart before checking out!</p>`
-    $('#items').append(mystr);
-} else {
-    // Add header row
-    let headerRow = `<li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
-                        <span>Product Name</span>
-                        <span>Quantity</span>
-                    </li>`;
-    $('#items').append(headerRow);
 
+if ($.isEmptyObject(cart)) {
+    let mystr = `<tr><td colspan="5" class="text-center text-danger">Your cart is empty. Please add some items before checking out!</td></tr>`;
+    $('#itemsTableBody').append(mystr);
+} else {
+    let index = 1;
     for (let item in cart) {
         let name = cart[item][1];
         let qty = cart[item][0];
-        let itemPrice = cart[item][2];
-        sum = sum + qty;
-        totalPrice = totalPrice + qty * itemPrice;
-        let mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
-                        ${name}
-                        <span class="badge badge-primary badge-pill">${qty}</span>
-                    </li>`;
-        $('#items').append(mystr);
+        let price = cart[item][2];
+        let subtotal = qty * price;
+        sum += qty;
+        totalPrice += subtotal;
+
+        let row = `
+            <tr>
+                <th scope="row">${index++}</th>
+                <td>${name}</td>
+                <td>${qty}</td>
+                <td>₹${price}</td>
+                <td>₹${subtotal}</td>
+            </tr>`;
+        $('#itemsTableBody').append(row);
     }
 }
+
+document.getElementById('cart').innerHTML = sum;
+document.getElementById('totalAmount').innerHTML = totalPrice;
+document.getElementById('totalPrice').innerHTML = totalPrice;
+$('#itemsJson').val(JSON.stringify(cart));
+$('#amount').val(totalPrice);
+
+
 document.getElementById('cart').innerHTML = sum;
 document.getElementById('totalPrice').innerHTML = totalPrice;
 $('#itemsJson').val(JSON.stringify(cart));
+$('#amount').val($('#totalPrice').html());
+
 {% if thank %}
-alert("Thanks for ordering with us. Your order id is {{id}}. Use it to track your order using our order tracker")
+alert("Thanks for ordering with us. Your order id is {{id}}. Use it to track your order using our order tracker.");
 localStorage.clear();
-document.location="";
-{%endif%}
-$('#amount').val($('#totalPrice').html())
+document.location = "";
+{% endif %}
+
+// Auto-fill form when saved address is selected
+$('.saved-address-radio').on('change', function () {
+    $('#name').val($(this).data('name'));
+    $('#email').val($(this).data('email'));
+    $('#phone').val($(this).data('phone'));
+    $('#address').val($(this).data('address'));
+    $('#address2').val($(this).data('address2'));
+    $('#city').val($(this).data('city'));
+    $('#state').val($(this).data('state'));
+    $('#zip_code').val($(this).data('zip'));
+});
 </script>
 {% endblock %}

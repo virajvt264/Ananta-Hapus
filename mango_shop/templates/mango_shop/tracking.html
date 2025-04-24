@@ -3,78 +3,111 @@
 {% block body %}
 <style>
     body {
-        background: #f9f9f9;
+        background: #f9fbfd;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
+
     .track-container {
         background: #ffffff;
         padding: 40px;
-        margin-top: 40px;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        margin-top: 60px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        transition: 0.3s ease;
     }
+
     h2, h4 {
         color: #2c3e50;
-        font-weight: 600;
+        font-weight: 700;
+        text-align: center;
     }
+
     .form-label {
-        font-weight: 500;
-    }
-    .form-control {
-        border-radius: 8px;
-        border: 1px solid #ced4da;
-    }
-    .btn-primary {
-        background-color: #27ae60;
-        border: none;
-        padding: 10px 25px;
-        border-radius: 8px;
-        transition: background-color 0.3s ease;
         font-weight: 600;
+        font-size: 1rem;
+        color: #495057;
     }
+
+    .form-control {
+        border-radius: 12px;
+        border: 1px solid #ced4da;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.04);
+        padding: 10px 15px;
+    }
+
+    .btn-primary {
+        background-color: #28a745;
+        border: none;
+        padding: 12px 36px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
     .btn-primary:hover {
-        background-color: #219150;
+        background-color: #1e7e34;
+        transform: translateY(-2px);
     }
+
     .list-group-item {
-        border-radius: 6px !important;
-        margin-bottom: 5px;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        border-radius: 10px !important;
+        margin-bottom: 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.03);
+        font-size: 1rem;
     }
+
     .badge-primary {
-        background-color: #3498db;
+        background-color: #007bff;
         font-size: 0.9rem;
-        padding: 6px 12px;
-        border-radius: 20px;
+        padding: 6px 16px;
+        border-radius: 50px;
+    }
+
+    .text-muted, .text-danger {
+        font-size: 0.95rem;
+    }
+
+    .emoji-title {
+        font-size: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        .btn-primary {
+            width: 100%;
+            margin-top: 10px;
+        }
     }
 </style>
 
 <div class="container">
     <div class="track-container">
-        <h2 class="mb-4">📦 Track Your Order</h2>
+        <div class="emoji-title">📦</div>
+        <h2 class="mb-4">Track Your Order</h2>
         <form method="post" action="#" id="trackerForm">{% csrf_token %}
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="orderId" class="form-label">Order Id</label>
-                    <input type="text" class="form-control" id="orderId" name="orderId" placeholder="Enter your Order ID" required>
+                    <label for="orderId" class="form-label">🆔 Order ID</label>
+                    <input type="text" class="form-control" id="orderId" name="orderId" placeholder="e.g. 12345XYZ" required>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your Email" required>
+                    <label for="email" class="form-label">📧 Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
                 </div>
             </div>
-            <div class="text-end mt-3">
+            <div class="text-end mt-4">
                 <button type="submit" class="btn btn-primary">🔍 Track Order</button>
             </div>
         </form>
     </div>
 
     <div class="track-container mt-5">
-        <h4>📋 Your Order Status</h4>
+        <div class="emoji-title">🕓</div>
+        <h4>Order Updates</h4>
         <ul class="list-group mt-3" id="items">
-            <li class="list-group-item text-muted">Enter your Order ID and Email, then click Track Order to see updates!</li>
+            <li class="list-group-item text-muted">Please enter your Order ID and Email to view tracking updates.</li>
         </ul>
-
-        <h4 class="mt-4">🛒 Your Order Details</h4>
-        <ul class="list-group mt-3" id="citems"></ul>
     </div>
 </div>
 {% endblock %}
@@ -83,7 +116,9 @@
 <script>
 $(document).ready(function () {
     $('#trackerForm').submit(function (event) {
+        event.preventDefault();
         $('#items').empty();
+
         var formData = {
             'orderId': $('#orderId').val(),
             'email': $('#email').val(),
@@ -95,15 +130,13 @@ $(document).ready(function () {
             url: '/tracking/',
             data: formData,
             dataType: 'json',
-            encode: true,
             success: function (data) {
-                $('#citems').empty();
                 if (data['status'] === 'success') {
                     let updates = data['updates'];
-                    let headerRow = `<li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
-                                        <span>Order Status</span>
-                                        <span>Updated Date</span>
-                                    </li>`;
+                    let headerRow = `<li class="list-group-item d-flex justify-content-between align-items-center fw-bold bg-light">
+                                        <span>Status</span>
+                                        <span>Date</span>
+                                     </li>`;
                     $('#items').append(headerRow);
 
                     updates.forEach(update => {
@@ -113,42 +146,24 @@ $(document).ready(function () {
                             month: '2-digit',
                             year: 'numeric'
                         });
-                        let mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
-                            ${text}
-                            <span class="badge badge-primary">${time}</span>
-                        </li>`;
-                        $('#items').append(mystr);
+
+                        let updateRow = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                            ${text}
+                                            <span class="badge badge-primary">${time}</span>
+                                         </li>`;
+                        $('#items').append(updateRow);
                     });
-
-                    let cart = JSON.parse(data['itemsJson']);
-                    headerRow = `<li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
-                                    <span>Product Name</span>
-                                    <span>Quantity</span>
-                                </li>`;
-                    $('#citems').append(headerRow);
-
-                    for (const item in cart) {
-                        let name = cart[item][1];
-                        let qty = cart[item][0];
-                        let mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
-                            ${name}
-                            <span class="badge badge-primary">${qty}</span>
-                        </li>`;
-                        $('#citems').append(mystr);
-                    }
                 } else {
-                    let errorMessage = `<li class="list-group-item text-danger">
-                        ❌ Order not found! Please check your Order ID and Email.
-                    </li>`;
-                    $('#items').append(errorMessage);
-                    $('#citems').append(errorMessage);
+                    let errorRow = `<li class="list-group-item text-danger">
+                                        ❌ No matching order found. Please check your Order ID and Email.
+                                    </li>`;
+                    $('#items').append(errorRow);
                 }
             },
             error: function () {
-                alert('⚠️ Error fetching order details. Please try again.');
+                alert('⚠️ Unable to fetch order details. Please try again later.');
             }
         });
-        event.preventDefault();
     });
 });
 </script>

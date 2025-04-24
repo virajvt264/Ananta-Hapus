@@ -192,4 +192,3 @@ def profile(request):
     orders = Orders.objects.filter(user=user)
     return render(request, 'mango_shop/profile_user.html', {'customers': customers, 'orders': orders})
 
-
